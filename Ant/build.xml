@@ -1,0 +1,86 @@
+<project name="WhatIsThis" default="help" basedir="../Java/Phasing">
+	
+	<target name="cj">
+        <delete dir="jar"/>
+    </target>
+
+    <target name="jars">
+		<echo message="compiles jars to jar folder"/>
+		<antcall target="receiver-jar"></antcall>
+		<antcall target="sender-jar"></antcall>
+		<antcall target="td-jar"></antcall>
+    </target>
+	
+	<target name="receiver-jar">
+        <mkdir dir="jar"/>
+        <jar destfile="jar/Receiver.jar">
+			
+			<fileset dir="out/production/Phasing"
+					   includes="**/*.class"
+					   excludes="Sender.class, TrustedDealer.class"
+			  />
+			  
+            <manifest>
+				<attribute name="Implementation-Title" value="View from the Receiver"/>
+				<attribute name="Implementation-Version" value="1.0"/>
+				<attribute name="Implementation-Vendor" value="SecurePSI"/>
+				<attribute name="Manifest-Version" value="1.0"/>
+				<attribute name="Created-By" value="An army of ants!"/>
+                <attribute name="Main-Class" value="Receiver"/>
+                <attribute name="Class-Path" value="lib/Scapi-2.4.jar lib/commons-exec-1.2.jar lib/bcprov-jdk16-146.jar lib/activemq-all-5.9.1.jar"/>
+            </manifest>
+        </jar>
+    </target>
+	
+	
+	<target name="sender-jar">
+        <mkdir dir="jar"/>
+        <jar destfile="jar/Sender.jar">
+			
+			<fileset dir="out/production/Phasing"
+					   includes="**/*.class"
+					   excludes="Receiver.class, TrustedDealer.class"
+			  />
+			  
+            <manifest>
+				<attribute name="Implementation-Title" value="View from the Sender"/>
+				<attribute name="Implementation-Version" value="1.0"/>
+				<attribute name="Implementation-Vendor" value="SecurePSI"/>
+				<attribute name="Manifest-Version" value="1.0"/>
+				<attribute name="Created-By" value="An army of ants!"/>
+                <attribute name="Main-Class" value="Sender"/>
+                <attribute name="Class-Path" value="lib/Scapi-2.4.jar lib/commons-exec-1.2.jar lib/bcprov-jdk16-146.jar lib/activemq-all-5.9.1.jar"/>
+            </manifest>
+        </jar>
+    </target>
+	
+	
+	<target name="td-jar">
+        <mkdir dir="jar"/>
+        <jar destfile="jar/TD.jar">
+			
+			<fileset dir="out/production/Phasing"
+					   includes="**/*.class"
+					   excludes="Sender.class, Receiver.class"
+			  />
+			  
+            <manifest>
+				<attribute name="Implementation-Title" value="View from the TrustedDealer"/>
+				<attribute name="Implementation-Version" value="1.0"/>
+				<attribute name="Implementation-Vendor" value="SecurePSI"/>
+				<attribute name="Manifest-Version" value="1.0"/>
+				<attribute name="Created-By" value="An army of ants!"/>
+                <attribute name="Main-Class" value="TrustedDealer"/>
+                <attribute name="Class-Path" value="lib/Scapi-2.4.jar lib/commons-exec-1.2.jar lib/bcprov-jdk16-146.jar lib/activemq-all-5.9.1.jar"/>
+            </manifest>
+        </jar>
+    </target>
+
+	<target name="help">
+		<echo message="Welcome, travellers."/>
+		<echo message="## Targets ##"/>
+		<echo message="cj:      deletes jar folder"/>
+		<echo message="jars:    compiles jars to jar folder"/>
+	</target>
+	
+</project>
